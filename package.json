@@ -2,7 +2,6 @@
   "name": "@falcondev-oss/configs",
   "type": "module",
   "version": "5.0.0",
-  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/falcondev-oss/configs",
   "keywords": [
@@ -26,6 +25,9 @@
       "require": "./src/commitlint/index.cjs"
     }
   },
+  "files": [
+    "./src"
+  ],
   "engines": {
     "node": "22",
     "pnpm": "10"
