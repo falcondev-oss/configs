@@ -1,2 +1,5 @@
-packages:
-  - 'packages/*'
+onlyBuiltDependencies:
+  - unrs-resolver
+
+publicHoistPattern:
+  - eslint*

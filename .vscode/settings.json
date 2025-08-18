@@ -1,6 +1,12 @@
 {
+  "prettier.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
   "eslint.useFlatConfig": true,
-  "references.preferredLocation": "peek",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -11,6 +17,8 @@
     "markdown",
     "json",
     "jsonc",
-    "yaml"
+    "yaml",
+    "dockercompose",
+    "github-actions-workflow"
   ]
 }

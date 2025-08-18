@@ -13,7 +13,7 @@ import nuxtRules from './nuxt.js'
 
 delete eslintConfigPrettier.rules['vue/html-self-closing']
 
-/** @type {import('./index.d.ts').eslintConfig} */
+/** @type {import('./index.js').eslintConfig} */
 export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
   return antfu({
     stylistic: false,
@@ -93,6 +93,7 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
           'unicorn/prefer-global-this': 'off',
           'unicorn/prefer-math-min-max': 'off',
           'unicorn/require-module-specifiers': 'off',
+          'unicorn/prefer-dom-node-dataset': 'off',
         },
       },
       {

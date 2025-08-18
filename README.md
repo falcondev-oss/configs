@@ -1,9 +1,6 @@
-# my configs
+# Configs for various tools and packages
 
-[![npm](https://img.shields.io/npm/v/%40louishaftmann/eslint-config?label=eslint-config)](https://npmjs.com/package/@louishaftmann/eslint-config)
-[![npm](https://img.shields.io/npm/v/%40louishaftmann/prettier-config?label=prettier-config)](https://npmjs.com/package/@louishaftmann/prettier-config)
-[![npm](https://img.shields.io/npm/v/%40louishaftmann/commitlint-config?label=commitlint-config)](https://npmjs.com/package/@louishaftmann/commitlint-config)
-[![npm](https://img.shields.io/npm/v/%40louishaftmann/lintstaged-config?label=lintstaged-config)](https://npmjs.com/package/@louishaftmann/lintstaged-config)
+[![npm](https://img.shields.io/npm/v/%40falcondev-oss/configs)](https://npmjs.com/package/@falcondev-oss/configs)
 
 ## Cool people and projects
 
@@ -13,7 +10,7 @@
 ## Install
 
 ```bash
-pnpm i -D prettier eslint lint-staged @commitlint/cli @louishaftmann/eslint-config @louishaftmann/prettier-config @louishaftmann/commitlint-config @louishaftmann/lintstaged-config
+pnpm i -D prettier eslint lint-staged @commitlint/cli @falcondev-oss/configs
 ```
 
 ## Config
@@ -30,7 +27,7 @@ pnpm i -D prettier eslint lint-staged @commitlint/cli @louishaftmann/eslint-conf
 
 // optional, if you have old eslint configs you want to use
 import { FlatCompat } from '@eslint/eslintrc'
-import eslintConfig from '@louishaftmann/eslint-config'
+import eslintConfig from '@falcondev-oss/configs/eslint'
 
 const compat = new FlatCompat()
 
@@ -69,7 +66,7 @@ See [browserslist/browserslist](https://github.com/browserslist/browserslist) fo
 **`prettier.config.js`:**
 
 ```js
-export { default } from '@louishaftmann/prettier-config'
+export { default } from '@falcondev-oss/configs/prettier'
 ```
 
 ### commitlint
@@ -80,7 +77,7 @@ export { default } from '@louishaftmann/prettier-config'
 
 ```js
 module.exports = {
-  extends: ['@louishaftmann/commitlint-config'],
+  extends: ['@falcondev-oss/configs/commitlint'],
 }
 ```
 
@@ -124,7 +121,7 @@ module.exports = {
 > e.g. `lintstagedConfig('web')`
 
 ```js
-import lintstagedConfig from '@louishaftmann/lintstaged-config'
+import lintstagedConfig from '@falcondev-oss/configs/lintstaged'
 
 export default {
   ...lintstagedConfig(),

@@ -1,4 +1,4 @@
-import eslintConfig from '@louishaftmann/eslint-config'
+import eslintConfig from './src/eslint/index.js'
 
 export default eslintConfig({
   unicorn: true,

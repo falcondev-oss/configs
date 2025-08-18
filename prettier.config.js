@@ -1,1 +1,1 @@
-export { default } from './packages/prettier-config/index.cjs'
+export { default } from './src/prettier/index.cjs'
