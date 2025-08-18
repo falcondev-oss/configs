@@ -34,11 +34,7 @@
   },
   "scripts": {
     "lint": "eslint --cache . && prettier --check --cache .",
-    "lint:fix": "eslint --fix --cache . && prettier --write --cache .",
-    "test": "pnpm -r run test",
-    "build": "pnpm -r run build",
-    "release": "bumpp -r && pnpm run publish",
-    "publish": "pnpm publish --no-git-checks --access public"
+    "lint:fix": "eslint --fix --cache . && prettier --write --cache ."
   },
   "dependencies": {
     "@antfu/eslint-config": "^5.0.0",
