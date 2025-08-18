@@ -12,17 +12,17 @@
   ],
   "exports": {
     "./prettier": {
-      "require": "./src/prettier/index.cjs"
+      "default": "./src/prettier/index.cjs"
     },
     "./lintstaged": {
-      "import": "./src/lintstaged/index.mjs"
+      "default": "./src/lintstaged/index.mjs"
     },
     "./eslint": {
       "types": "./src/eslint/index.d.ts",
-      "import": "./src/eslint/index.js"
+      "default": "./src/eslint/index.js"
     },
     "./commitlint": {
-      "require": "./src/commitlint/index.cjs"
+      "default": "./src/commitlint/index.cjs"
     }
   },
   "files": [
