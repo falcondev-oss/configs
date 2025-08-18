@@ -1,7 +1,7 @@
 {
   "name": "@falcondev-oss/configs",
   "type": "module",
-  "version": "4.3.3",
+  "version": "5.0.0",
   "private": true,
   "license": "MIT",
   "homepage": "https://github.com/falcondev-oss/configs",
