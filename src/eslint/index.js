@@ -87,6 +87,13 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
           'unicorn/prefer-math-min-max': 'off',
           'unicorn/require-module-specifiers': 'off',
           'unicorn/prefer-dom-node-dataset': 'off',
+          'unicorn/name-replacements': 'off',
+          'unicorn/max-nested-calls': 'off',
+          'unicorn/prefer-uint8array-base64': 'off', // Node.js 26+ is needed
+          'unicorn/consistent-boolean-name': 'off',
+          'unicorn/prefer-await': 'off',
+          'unicorn/no-top-level-side-effects': 'warn',
+          'unicorn/no-break-in-nested-loop': 'off',
         },
       },
     ])
@@ -109,11 +116,11 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
 
         'antfu/top-level-function': 'error',
         'antfu/no-top-level-await': 'off',
+        'pnpm/json-enforce-catalog': 'off',
+        'pnpm/yaml-enforce-settings': 'off',
 
         'yoda': ['error', 'never', { exceptRange: true }],
         'no-sequences': 'off',
-
-        'ts/promise-function-async': 'off',
       },
     })
     .append({
