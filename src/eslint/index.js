@@ -1,8 +1,10 @@
 // @ts-check
-import antfu, { GLOB_SRC } from '@antfu/eslint-config'
+import antfu, { GLOB_MARKDOWN, GLOB_SRC } from '@antfu/eslint-config'
 // @ts-ignore
 import shopifyEslintPlugin from '@shopify/eslint-plugin'
+// @ts-ignore
 import eslintConfigPrettier from 'eslint-config-prettier'
+// @ts-ignore
 import eslintPluginCompat from 'eslint-plugin-compat'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import { loadPackageJSON } from 'local-pkg'
@@ -123,7 +125,12 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
 
         'yoda': ['error', 'never', { exceptRange: true }],
         'no-sequences': 'off',
-
+      },
+    })
+    .append({
+      name: 'falcondev/markdown/rules',
+      files: [GLOB_MARKDOWN],
+      rules: {
         'markdown/heading-increment': 'off',
       },
     })
