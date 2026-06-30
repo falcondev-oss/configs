@@ -1,3 +1,5 @@
+import { GLOB_HTML, GLOB_SRC } from '@antfu/eslint-config'
+import { fixupPluginRules } from '@eslint/compat'
 import github from 'eslint-plugin-github'
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -5,8 +7,9 @@ export default [
   {
     name: 'github',
     plugins: {
-      github: github.getFlatConfigs().recommended.plugins.github,
+      github: fixupPluginRules(github.getFlatConfigs().recommended.plugins.github),
     },
+    files: [GLOB_HTML, GLOB_SRC],
     rules: {
       ...Object.fromEntries(
         Object.entries(github.getFlatConfigs().recommended).filter(([rule]) =>
@@ -17,6 +20,7 @@ export default [
   },
   {
     name: 'falcondev/github',
+    files: [GLOB_HTML, GLOB_SRC],
     rules: {
       'i18n-text/no-en': 'off',
       'filenames/match-regex': 'off',

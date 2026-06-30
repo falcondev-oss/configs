@@ -1,6 +1,6 @@
 // @ts-check
-
-import antfu from '@antfu/eslint-config'
+import antfu, { GLOB_SRC } from '@antfu/eslint-config'
+// @ts-ignore
 import shopifyEslintPlugin from '@shopify/eslint-plugin'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import eslintPluginCompat from 'eslint-plugin-compat'
@@ -11,6 +11,7 @@ import expoRules from './expo.js'
 import github from './github.js'
 import nuxtRules from './nuxt.js'
 
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 delete eslintConfigPrettier.rules['vue/html-self-closing']
 
 /** @type {import('./index.js').eslintConfig} */
@@ -58,28 +59,20 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
   })
     .prepend(github)
     .append(nuxt ? nuxtRules : [])
-    .override('antfu/unicorn/rules', (config) => {
+    .override('antfu/unicorn/setup', (config) => {
       delete config.plugins
       return config
     })
-    .insertBefore('antfu/unicorn/rules', eslintPluginUnicorn.configs['flat/recommended'])
-    .append({
-      files: ['**/*.tsx'],
-      rules: {
-        'ts/promise-function-async': 'off',
-      },
+    .insertBefore('antfu/unicorn/rules', {
+      ...eslintPluginUnicorn.configs.recommended,
+      files: [GLOB_SRC],
     })
     .append([
       {
         name: 'falcondev/unicorn/rules',
+        files: [GLOB_SRC],
         rules: {
-          'unicorn/filename-case': [
-            'error',
-            {
-              case: 'kebabCase',
-              ignore: [/^README\./],
-            },
-          ],
+          'unicorn/filename-case': 'off',
           'unicorn/prevent-abbreviations': 'off',
           'unicorn/no-null': 'off',
           'unicorn/no-array-callback-reference': 'off',
@@ -96,31 +89,11 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
           'unicorn/prefer-dom-node-dataset': 'off',
         },
       },
-      {
-        name: 'falcondev/unicorn/overrides',
-        files: ['**/@(composables|hooks)/**/*'],
-        rules: { 'unicorn/filename-case': ['error', { case: 'camelCase' }] },
-      },
-      {
-        name: 'falcondev/unicorn/overrides',
-        files: ['**/@(components|providers)/**/*'],
-        rules: { 'unicorn/filename-case': ['error', { case: 'pascalCase' }] },
-      },
-      {
-        name: 'falcondev/unicorn/overrides',
-        files: [String.raw`**/pages/**/*\[*\]*.vue`],
-        rules: { 'unicorn/filename-case': 'off' },
-      },
-      {
-        name: 'falcondev/unicorn/ignore',
-        files: ['.github/**/*', '**/prisma/migrations/**/*', '**/db/migrations/meta/**/*'],
-        rules: { 'unicorn/filename-case': 'off' },
-      },
     ])
     .append({
       name: 'falcondev/rules',
       rules: {
-        'no-shadow': ['error', { ignoreOnInitialization: true }],
+        'no-shadow': 'off',
 
         'no-console': ['warn', { allow: ['warn', 'error', 'debug', 'trace'] }],
 
@@ -134,42 +107,13 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
 
         'jsonc/indent': 'off',
 
-        // handled by antfu/eslint-config v3
-        /* 'import/order': [
-          'warn',
-          {
-            'groups': [
-              'builtin',
-              'external',
-              'internal',
-              'parent',
-              'sibling',
-              'index',
-              'object',
-              'type',
-            ],
-            'pathGroups': [
-              {
-                pattern: '~/**',
-                group: 'internal',
-              },
-            ],
-            'newlines-between': 'always',
-            'alphabetize': {
-              order: 'asc',
-              caseInsensitive: false,
-            },
-          },
-        ], */
-
-        // prefer `test` over `it` because it makes the test name more readable (no `should`)
-        'test/consistent-test-it': ['error', { fn: 'test', withinDescribe: 'test' }],
-
         'antfu/top-level-function': 'error',
         'antfu/no-top-level-await': 'off',
 
         'yoda': ['error', 'never', { exceptRange: true }],
         'no-sequences': 'off',
+
+        'ts/promise-function-async': 'off',
       },
     })
     .append({
@@ -225,7 +169,7 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
     .append(
       (async () => {
         const packageJSON = await loadPackageJSON()
-        if (!('browserslist' in packageJSON)) return
+        if (!packageJSON || !('browserslist' in packageJSON)) return
 
         return eslintPluginCompat.configs['flat/recommended']
       })(),
@@ -235,6 +179,9 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
       ...eslintConfigPrettier,
     })
     .append(expo ? expoRules : [])
+    .append({
+      ignores: ['node_modules/', 'dist/', '.nuxt/', '.output/', '.types/', 'pnpm-lock.yaml'],
+    })
 }
 
 export default eslintConfig

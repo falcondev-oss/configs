@@ -19,26 +19,16 @@ pnpm i -D prettier eslint lint-staged @commitlint/cli @falcondev-oss/configs
 
 **`eslint.config.js`:**
 
-> [!NOTE]
-> For `import`s to work, you need to set `"type": "module"` in your `package.json`
-
 ```js
 // @ts-check
-
-// optional, if you have old eslint configs you want to use
-import { FlatCompat } from '@eslint/eslintrc'
 import eslintConfig from '@falcondev-oss/configs/eslint'
-
-const compat = new FlatCompat()
 
 export default eslintConfig({
   nuxt: true,
   tsconfigPath: './tsconfig.json',
+}).append({
+  ignores: [],
 })
-  .append(compat.extends('plugin:@tanstack/eslint-plugin-query/recommended'))
-  .append({
-    ignores: [],
-  })
 ```
 
 #### `eslint-plugin-compat` Target Browsers
@@ -71,12 +61,10 @@ export { default } from '@falcondev-oss/configs/prettier'
 
 ### commitlint
 
-**`commitlint.config.cjs`:**
-
-<!-- eslint-disable unicorn/prefer-module -->
+**`commitlint.config.js`:**
 
 ```js
-module.exports = {
+export default {
   extends: ['@falcondev-oss/configs/commitlint'],
 }
 ```
@@ -113,19 +101,25 @@ module.exports = {
 
 ### lint-staged
 
-**`.lintstagedrc.js`:**
-
-> [!WARNING]
-> When configured inside a pnpm workspace package, pass the package name as a parameter.
->
-> e.g. `lintstagedConfig('web')`
+**`lint-staged.config.js`:**
 
 ```js
-import lintstagedConfig from '@falcondev-oss/configs/lintstaged'
+const NO_COLOR = process.env.VSCODE_GIT_COMMAND ? ' --no-color' : ''
 
-export default {
-  ...lintstagedConfig(),
+// eslint-disable-next-line no-console, unicorn/no-top-level-side-effects
+console.log('[lint-staged]')
+
+export function lintstagedConfig() {
+  return {
+    '*': [
+      'eslint --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content --no-warn-ignored --fix',
+      'prettier --cache --cache-strategy content --log-level warn --ignore-unknown --no-error-on-unmatched-pattern --write',
+    ],
+    '**': () => `pnpm${NO_COLOR} type-check`,
+  }
 }
+
+export default lintstagedConfig()
 ```
 
 ### Ignore files
@@ -148,10 +142,23 @@ pnpm-lock.yaml
 ```json
 {
   "scripts": {
-    "prepare": "husky",
-    "lint": "eslint --cache . && prettier --check --cache .",
-    "ci:lint": "eslint --cache --cache-strategy content . && prettier --check --cache --cache-strategy content .",
-    "lint:fix": "eslint --fix --cache . && prettier --write --cache ."
+    "prepare": "[ -z \"$CI\" ] && husky || true",
+    "eslint:cmd": "_ () { cd \"$1\" && eslint --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content  $(shift; echo \"$@\") . ; }; _",
+    "prettier:cmd": "_ () { cd \"$1\" && prettier --cache --cache-strategy content --log-level warn  $(shift; echo \"$@\") . ; }; _",
+    "prettier:cmd:root": "_ () { pnpm prettier:cmd \"$1\" --ignore-path=.gitignore --ignore-path=.prettierignore --ignore-path=.prettierignore.root  $(shift; echo \"$@\") ; }; _",
+    "lint:root": "pnpm eslint:cmd \"$PWD\" && pnpm prettier:cmd:root \"$PWD\" --check",
+    "lint:fix:root": "pnpm eslint:cmd \"$PWD\" --fix && pnpm prettier:cmd:root \"$PWD\" --write"
+  }
+}
+```
+
+**Inside a package:**
+
+```json
+{
+  "scripts": {
+    "lint": "pnpm -w eslint:cmd \"$PWD\" && pnpm -w prettier:cmd \"$PWD\" --check",
+    "lint:fix": "pnpm -w eslint:cmd \"$PWD\" --fix && pnpm -w prettier:cmd \"$PWD\" --write"
   }
 }
 ```

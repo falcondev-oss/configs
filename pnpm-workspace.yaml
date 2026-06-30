@@ -1,5 +1,9 @@
-onlyBuiltDependencies:
-  - unrs-resolver
+allowBuilds:
+  unrs-resolver: true
 
 publicHoistPattern:
   - eslint*
+
+shellEmulator: true
+# eslint-disable-next-line pnpm/yaml-enforce-settings
+trustPolicy: off
