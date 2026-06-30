@@ -89,10 +89,12 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
           'unicorn/prefer-dom-node-dataset': 'off',
           'unicorn/name-replacements': 'off',
           'unicorn/max-nested-calls': 'off',
-          'unicorn/prefer-uint8array-base64': 'off', // Node.js 26+ is needed
+          'unicorn/prefer-uint8array-base64': 'off', // Node.js 26+ is needed (es2025)
+          'unicorn/prefer-iterator-to-array': 'off', // es2025
           'unicorn/consistent-boolean-name': 'off',
           'unicorn/prefer-await': 'off',
-          'unicorn/no-top-level-side-effects': 'warn',
+          'unicorn/no-top-level-side-effects': 'off',
+          'unicorn/no-top-level-assignment-in-function': 'warn',
           'unicorn/no-break-in-nested-loop': 'off',
         },
       },
@@ -121,6 +123,8 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
 
         'yoda': ['error', 'never', { exceptRange: true }],
         'no-sequences': 'off',
+
+        'markdown/heading-increment': 'off',
       },
     })
     .append({
