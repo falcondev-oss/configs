@@ -3,7 +3,7 @@
   "type": "module",
   "version": "6.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/falcondev-oss/configs",
+  "repository": "github:falcondev-oss/configs",
   "keywords": [
     "eslint-config",
     "prettier-config",
