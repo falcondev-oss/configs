@@ -1,7 +1,7 @@
 {
   "name": "@falcondev-oss/configs",
   "type": "module",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "license": "MIT",
   "repository": "github:falcondev-oss/configs",
   "keywords": [
