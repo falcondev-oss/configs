@@ -98,6 +98,9 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
           'unicorn/no-top-level-side-effects': 'off',
           'unicorn/no-top-level-assignment-in-function': 'warn',
           'unicorn/no-break-in-nested-loop': 'off',
+          'unicorn/consistent-compound-words': 'off',
+          'unicorn/no-non-function-verb-prefix': 'off',
+          'unicorn/no-computed-property-existence-check': 'off', // should only check when key is unknown `string`
         },
       },
     ])
@@ -125,6 +128,15 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
 
         'yoda': ['error', 'never', { exceptRange: true }],
         'no-sequences': 'off',
+
+        'test/consistent-test-it': ['error', { fn: 'test' }],
+      },
+    })
+    .append({
+      name: 'falcondev/tsx/rules',
+      files: ['*.tsx'],
+      rules: {
+        'ts/promise-function-async': 'off',
       },
     })
     .append({
