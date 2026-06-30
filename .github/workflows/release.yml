@@ -11,10 +11,15 @@ on:
         description: Bump version
         type: choice
         required: true
-        options: [⚙️ patch (v1.0.1), 🧩 minor (v1.1.0), ⭐️ major (v2.0.0), 🔄 retry deployment]
+        options:
+          - ⚙️ patch (v1.0.1)
+          - 🧩 minor (v1.1.0)
+          - ⭐️ major (v2.0.0)
+          - 🔄 retry deployment
+
   push:
     tags:
-      - 'v*'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 run-name: ${{ github.event_name == 'workflow_dispatch' && format('Bump {0}', startsWith(inputs.version, '⚙️') && 'patch ⚙️' || startsWith(inputs.version, '🧩') && 'minor 🧩' || startsWith(inputs.version, '⭐️') && 'major ⭐️' || 'none (retry deployment 🔄)') || github.ref_name }}
 
@@ -44,7 +49,7 @@ jobs:
 
       - name: 🛤️ Version tag must be on master branch
         if: github.event_name == 'push'
-        run: git branch --contains ${{ github.ref }} | grep master
+        run: '[[ "${{ github.ref }} == "refs/heads/master" ]]'
 
       - name: ⬆️ Bump version
         if: github.event_name == 'workflow_dispatch'

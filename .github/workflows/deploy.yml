@@ -4,6 +4,9 @@ name:  
 
 run-name: Deploy ${{ inputs.ref || github.ref_name }}
 
+permissions:
+  id-token: write
+
 on:
   workflow_dispatch:
   workflow_call:
@@ -29,6 +32,4 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Publish
-        run: pnpm publish --no-git-checks --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm -r publish --access=public --provenance --no-git-checks
