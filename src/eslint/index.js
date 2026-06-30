@@ -1,5 +1,5 @@
 // @ts-check
-import antfu, { GLOB_MARKDOWN, GLOB_SRC } from '@antfu/eslint-config'
+import antfu, { GLOB_MARKDOWN, GLOB_SRC, GLOB_TSX } from '@antfu/eslint-config'
 // @ts-ignore
 import shopifyEslintPlugin from '@shopify/eslint-plugin'
 // @ts-ignore
@@ -134,7 +134,7 @@ export function eslintConfig({ nuxt = false, tsconfigPath, expo = false }) {
     })
     .append({
       name: 'falcondev/tsx/rules',
-      files: ['*.tsx'],
+      files: [GLOB_TSX],
       rules: {
         'ts/promise-function-async': 'off',
       },
